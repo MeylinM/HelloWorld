@@ -17,13 +17,8 @@ public class UserManagerFactory {
 
     public static DataAccessible getDataAccssesible() {
         //Mirar otro archivo de propiedades para saber si debe leer de la DB o del File
-        /*if(option == 0){
-            return new FileUserDataAccessor();
-    }else{
-            return new DBUserDataAccessor();
-        }
-         */
-        return null;
+
+        return new FileUserDataAccessor();
     }
 
 }

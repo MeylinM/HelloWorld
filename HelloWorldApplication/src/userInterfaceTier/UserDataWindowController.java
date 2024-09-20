@@ -5,26 +5,29 @@
  */
 package userInterfaceTier;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import dataAccessTier.DataAccessible;
+import dataAccessTier.UserManagerFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import model.User;
 
 /**
  *
  * @author 2dam
  */
-public class UserDataWindowController implements Initializable {
+public class UserDataWindowController {
     
     @FXML
     private Label label;
-    
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+   
+    @FXML
+    private void handleButtonAction(ActionEvent event) {
+        //declarar los labels a los que les vamos a asignar la info del usuario
+        User user= UserManagerFactory.getDataAccssesible().getUserData();
+      
+        
+    }
+  
     
 }
