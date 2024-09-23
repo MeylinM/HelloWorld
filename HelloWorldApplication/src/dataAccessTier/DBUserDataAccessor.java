@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import model.User;
 
 /**
@@ -19,56 +21,57 @@ import model.User;
  * @author 2dam
  */
 public class DBUserDataAccessor implements DataAccessible {
-    
+
     private Connection con;
     private PreparedStatement stmt;
     final String GETUSERDATA = "SELECT * FROM usuario";
-    
+
     @Override
     public User getUserData() {
-        User user=null;
+        User user = null;
         openConnection();
         try {
             stmt = con.prepareStatement(GETUSERDATA);
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
                 user = new User();
-                user.setDni(resultSet.getNString("DNI"));
+                user.setDni(resultSet.getString("DNI"));
                 user.setUserName(resultSet.getString("USERNAME"));
                 user.setFullName(resultSet.getString("FULLNAME"));
                 user.setPasswd(resultSet.getString("PASSWD"));
-            }else{
+            } else {
                 return null;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DBUserDataAccessor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger("dataAccessTier").severe(ex.getLocalizedMessage());
+            new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK).showAndWait();
         }
-        try {
-            closeConnection(stmt,con);
-        } catch (SQLException ex) {
-            Logger.getLogger(DBUserDataAccessor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        closeConnection(stmt, con);
         return user;
     }
-    
+
     public Connection openConnection() {
         try {
             String url = "jdbc:mysql://localhost:3306/user?serverTimezone=Europe/Madrid&useSSL=false";
             con = DriverManager.getConnection(url, "root", "abcd*1234");
         } catch (SQLException e) {
-            System.out.println("Error al intentar abrir la BD");
+            Logger.getLogger("dataAccessTier").severe(e.getLocalizedMessage());
+            new Alert(Alert.AlertType.ERROR, "Data Base can not be open", ButtonType.OK).showAndWait();
         }
         return con;
     }
-    
-    public void closeConnection(PreparedStatement stmt, Connection con) throws SQLException {
-        System.out.println("Conexion cerrada");
-        if (stmt != null) {
-            stmt.close();
+
+    public void closeConnection(PreparedStatement stmt, Connection con) {
+        try {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        } catch (SQLException e) {
+            Logger.getLogger("dataAccessTier").severe(e.getLocalizedMessage());
+            new Alert(Alert.AlertType.ERROR, "Data Base can not be closed", ButtonType.OK).showAndWait();
         }
-        if (con != null) {
-            con.close();
-        }
-        System.out.println("--------------------");
     }
 }

@@ -5,13 +5,13 @@
  */
 package userInterfaceTier;
 
-import dataAccessTier.DBUserDataAccessor;
-import dataAccessTier.DataAccessible;
+
 import dataAccessTier.UserManagerFactory;
-import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import model.User;
 
@@ -33,13 +33,16 @@ public class UserDataWindowController {
     @FXML
     private void handleButtonAction(ActionEvent event) {
         //declarar los labels a los que les vamos a asignar la info del usuario
-
-        User user = UserManagerFactory.getDataAccssesible().getUserData();
-        dni.setText(user.getDni());
-        userName.setText(user.getUserName());
-        fullName.setText(user.getFullName());
-        passwd.setText(user.getPasswd());
-
+        try {
+            User user = UserManagerFactory.getDataAccssesible().getUserData();
+            dni.setText(user.getDni());
+            userName.setText(user.getUserName());
+            fullName.setText(user.getFullName());
+            passwd.setText(user.getPasswd());
+        } catch (Exception e) {
+            Logger.getLogger("userInterfaceTier").severe(e.getLocalizedMessage());
+            new Alert(Alert.AlertType.ERROR, "User information can not be found", ButtonType.OK).showAndWait();
+        }
     }
 
 }
