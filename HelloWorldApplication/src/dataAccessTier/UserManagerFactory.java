@@ -5,9 +5,7 @@
  */
 package dataAccessTier;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
+import java.util.ResourceBundle;
 
 /**
  *
@@ -17,8 +15,18 @@ public class UserManagerFactory {
 
     public static DataAccessible getDataAccssesible() {
         //Mirar otro archivo de propiedades para saber si debe leer de la DB o del File
-
-        return new FileUserDataAccessor();
+        ResourceBundle configFile = ResourceBundle.getBundle("resources.Config");
+        if (configFile.containsKey("optGetData")) {
+            String optGetData = configFile.getString("optGetData");
+            if ("0".equals(optGetData)) {
+                return new FileUserDataAccessor();
+            } else if ("1".equals(optGetData)) {
+                return new DBUserDataAccessor();
+            } else {
+                throw new IllegalArgumentException("Valor inválido para optGetData: " + optGetData);
+            }
+        }else {
+            throw new IllegalArgumentException("La clave 'optGetData' no se encuentra en el archivo de configuración.");
+        }
     }
-
 }
