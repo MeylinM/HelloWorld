@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package userInterfaceTier;
-
 
 import dataAccessTier.UserManagerFactory;
 import java.util.logging.Logger;
@@ -16,24 +10,44 @@ import javafx.scene.control.Label;
 import model.User;
 
 /**
+ * Controller class for the User Data Window.
  *
- * @author 2dam
+ * 
+ * This class is responsible for handling user interface interactions in the
+ * User Data Window. It retrieves user data from the data access layer and
+ * displays it in the corresponding labels in the JavaFX UI.
+ *
+ * @author meylin y olaia
  */
 public class UserDataWindowController {
 
     @FXML
     private Label dni;
+
     @FXML
     private Label userName;
+
     @FXML
     private Label fullName;
+
     @FXML
     private Label passwd;
 
+    /**
+     * Handles the action triggered by the user when interacting with the UI.
+     *
+     *
+     * This method retrieves user data using the {@code UserManagerFactory} and
+     * sets the data into the respective labels in the user interface. If an
+     * error occurs during data retrieval, an error message is shown to the
+     * user.
+     *
+     * @param event the action event triggered by the user.
+     */
     @FXML
     private void handleButtonAction(ActionEvent event) {
-        //declarar los labels a los que les vamos a asignar la info del usuario
         try {
+            // Retrieve and assign user data to the corresponding labels.
             User user = UserManagerFactory.getDataAccssesible().getUserData();
             dni.setText(user.getDni());
             userName.setText(user.getUserName());
