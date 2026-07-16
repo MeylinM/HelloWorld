@@ -227,18 +227,6 @@ CREATE TABLE ejemplo (
 ✓ **Compilación con Ant** - Build automático y multiplataforma
 ✓ **Fácil de extender** - Estructura clara para agregar nuevas funcionalidades
 
----
-
-## ★ Próximos Pasos y Mejoras Futuras
-
-- [ ] Implementar validaciones más robustas
-- [ ] Agregar pruebas unitarias
-- [ ] Optimizar consultas a base de datos
-- [ ] Mejorar la interfaz gráfica
-- [ ] Agregar autenticación de usuarios
-- [ ] Documentación detallada de API
-
----
 
 ## ★ Licencia
 
@@ -249,6 +237,7 @@ Este proyecto ha sido desarrollado como parte del **First DIN Challenge** en un 
 <div align="center">
   <p><strong>Desarrollado por</strong></p>
   <p><a href="https://github.com/MeylinM">@MeylinM</a></p>
+  <p><a href="https://github.com/olaialor">@olaialor</a></p>
   <br>
-  <p>📌 <strong>Última actualización:</strong> 2026</p>
+  <p><strong>Última actualización:</strong> 2026</p>
 </div>
